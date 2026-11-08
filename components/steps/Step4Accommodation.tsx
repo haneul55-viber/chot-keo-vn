@@ -51,7 +51,7 @@ const TYPE_LABELS: Record<LodgingType, string> = {
 const PLATFORM_STYLES: Record<LodgingPlatform, string> = {
   Agoda: "bg-rose-600 text-white",
   "Booking.com": "bg-blue-700 text-white",
-  Traveloka: "bg-sky-600 text-white",
+  Traveloka: "bg-sky-700 text-white",
   Trivago: "bg-amber-500 text-slate-950",
 };
 
@@ -145,40 +145,44 @@ export function Step4Accommodation({
               </CardDescription>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <div className="text-right">
-                <div className="text-xs text-slate-500">Chi phí lưu trú</div>
-                <div className="text-base font-extrabold text-teal-700 dark:text-teal-400 price-num">
+                <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                  Chi phí lưu trú
+                </div>
+                <div className="text-base font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                   {formatVND(effectiveStepRange.min)}
                   {effectiveStepRange.max !== effectiveStepRange.min &&
                     ` – ${formatVND(effectiveStepRange.max)}`}
                 </div>
               </div>
 
-              <div className="inline-flex rounded-xl border border-slate-200 p-1 dark:border-slate-800">
+              <div className="inline-flex rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-1 dark:border-[#1e2d45] dark:bg-[#172338]">
                 <button
                   type="button"
+                  aria-pressed={viewMode === "list"}
                   onClick={() => setViewMode("list")}
                   className={cn(
-                    "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer",
+                    "inline-flex items-center gap-1.5 rounded-xl min-h-[38px] px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer",
                     viewMode === "list"
-                      ? "bg-teal-600 text-white"
-                      : "text-slate-600 dark:text-slate-400"
+                      ? "bg-[#0f766e] text-white dark:bg-teal-400 dark:text-slate-950"
+                      : "text-slate-700 hover:text-slate-900 dark:text-slate-300"
                   )}
                 >
-                  <List className="h-3.5 w-3.5" /> Danh sách
+                  <List className="h-3.5 w-3.5" aria-hidden="true" /> Danh sách
                 </button>
                 <button
                   type="button"
+                  aria-pressed={viewMode === "map"}
                   onClick={() => setViewMode("map")}
                   className={cn(
-                    "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer",
+                    "inline-flex items-center gap-1.5 rounded-xl min-h-[38px] px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer",
                     viewMode === "map"
-                      ? "bg-teal-600 text-white"
-                      : "text-slate-600 dark:text-slate-400"
+                      ? "bg-[#0f766e] text-white dark:bg-teal-400 dark:text-slate-950"
+                      : "text-slate-700 hover:text-slate-900 dark:text-slate-300"
                   )}
                 >
-                  <MapIcon className="h-3.5 w-3.5" /> Bản đồ
+                  <MapIcon className="h-3.5 w-3.5" aria-hidden="true" /> Bản đồ
                 </button>
               </div>
             </div>
@@ -187,17 +191,21 @@ export function Step4Accommodation({
 
         <CardContent className="space-y-5">
           {/* Filter Panel */}
-          <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-4 dark:border-slate-800 dark:bg-slate-800/40">
+          <div className="rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-4 space-y-4 dark:border-[#1e2d45] dark:bg-[#172338]/70">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                <Filter className="h-3.5 w-3.5 text-teal-600" /> Bộ lọc lưu trú
+                <Filter
+                  className="h-3.5 w-3.5 text-[#0f766e] dark:text-teal-400"
+                  aria-hidden="true"
+                />{" "}
+                Bộ lọc lưu trú
               </span>
               <button
                 type="button"
                 onClick={onResetFilters}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 hover:underline dark:text-teal-400 cursor-pointer"
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#0f766e] hover:underline dark:text-teal-400 cursor-pointer"
               >
-                <RotateCcw className="h-3 w-3" /> Đặt lại bộ lọc
+                <RotateCcw className="h-3 w-3" aria-hidden="true" /> Đặt lại bộ lọc
               </button>
             </div>
 
@@ -209,12 +217,13 @@ export function Step4Accommodation({
                   <button
                     key={type}
                     type="button"
+                    aria-pressed={active}
                     onClick={() => toggleType(type)}
                     className={cn(
-                      "rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer",
+                      "rounded-full border min-h-[38px] px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer",
                       active
-                        ? "border-teal-600 bg-teal-600 text-white dark:border-teal-400 dark:bg-teal-500 dark:text-slate-950"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-teal-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
+                        ? "border-[#0f766e] bg-[#0f766e] text-white dark:border-teal-400 dark:bg-teal-400 dark:text-slate-950"
+                        : "border-[#d6cbb9] bg-white text-slate-700 hover:border-[#0f766e]/60 dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-300"
                     )}
                   >
                     {TYPE_LABELS[type]}
@@ -227,10 +236,10 @@ export function Step4Accommodation({
               {/* Price Slider */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-slate-600 dark:text-slate-300">
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">
                     Trần giá gốc / đêm:
                   </span>
-                  <span className="font-bold text-teal-700 dark:text-teal-400 price-num">
+                  <span className="font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                     {draft.lodgingFilters.maxPricePerNight > 0
                       ? `≤ ${formatVND(draft.lodgingFilters.maxPricePerNight)}`
                       : "Không giới hạn"}
@@ -240,6 +249,7 @@ export function Step4Accommodation({
                   min={300000}
                   max={maxCatalogPrice}
                   step={100000}
+                  aria-label="Trần giá mỗi đêm"
                   value={[
                     draft.lodgingFilters.maxPricePerNight > 0
                       ? draft.lodgingFilters.maxPricePerNight
@@ -255,13 +265,17 @@ export function Step4Accommodation({
 
               {/* Area Selector */}
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <label
+                  htmlFor="lodging-area-select"
+                  className="text-xs font-semibold text-slate-700 dark:text-slate-300"
+                >
                   Khu vực:
                 </label>
                 <select
+                  id="lodging-area-select"
                   value={draft.lodgingFilters.area}
                   onChange={(e) => onUpdateFilters({ area: e.target.value })}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold outline-none focus:border-teal-500 dark:border-slate-700 dark:bg-slate-900"
+                  className="w-full min-h-[38px] rounded-xl border border-[#d6cbb9] bg-white px-3 py-2 text-xs font-semibold text-slate-800 outline-none focus:border-[#0f766e] dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-200 cursor-pointer"
                 >
                   <option value="all">Tất cả khu vực ({areas.length})</option>
                   {areas.map((area) => (
@@ -273,31 +287,45 @@ export function Step4Accommodation({
               </div>
 
               {/* Rating & Free Cancellation */}
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="space-y-1">
-                  <div className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                  <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Điểm đánh giá:
                   </div>
                   <div className="flex gap-1.5">
-                    {[0, 4.5, 4.7].map((r) => (
-                      <button
-                        key={r}
-                        type="button"
-                        onClick={() => onUpdateFilters({ minRating: r })}
-                        className={cn(
-                          "rounded-lg border px-2.5 py-1 text-xs font-semibold cursor-pointer",
-                          draft.lodgingFilters.minRating === r
-                            ? "border-teal-600 bg-teal-50 text-teal-800 dark:bg-teal-950 dark:text-teal-300"
-                            : "border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
-                        )}
-                      >
-                        {r === 0 ? "Tất cả" : `≥ ${r}★`}
-                      </button>
-                    ))}
+                    {[0, 4.5, 4.7].map((r) => {
+                      const active = draft.lodgingFilters.minRating === r;
+                      return (
+                        <button
+                          key={r}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() => onUpdateFilters({ minRating: r })}
+                          className={cn(
+                            "inline-flex items-center gap-1 rounded-xl border min-h-[36px] px-2.5 py-1 text-xs font-bold transition-colors cursor-pointer price-num",
+                            active
+                              ? "border-[#0f766e] bg-teal-50 text-[#0f766e] dark:border-teal-400 dark:bg-teal-950/60 dark:text-teal-300"
+                              : "border-[#d6cbb9] bg-white text-slate-700 dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-300"
+                          )}
+                        >
+                          {r === 0 ? (
+                            "Tất cả"
+                          ) : (
+                            <>
+                              <span>≥ {r}</span>
+                              <Star
+                                className="h-3 w-3 fill-amber-400 text-amber-500"
+                                aria-hidden="true"
+                              />
+                            </>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700 dark:text-slate-300">
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700 dark:text-slate-300">
                   <Switch
                     checked={draft.lodgingFilters.freeCancellationOnly}
                     onCheckedChange={(checked) =>
@@ -311,19 +339,22 @@ export function Step4Accommodation({
 
             {/* Amenities */}
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="text-xs text-slate-500">Tiện nghi:</span>
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
+                Tiện nghi:
+              </span>
               {COMMON_AMENITIES.map((amenity) => {
                 const active = draft.lodgingFilters.amenities.includes(amenity);
                 return (
                   <button
                     key={amenity}
                     type="button"
+                    aria-pressed={active}
                     onClick={() => toggleAmenity(amenity)}
                     className={cn(
-                      "rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer",
+                      "rounded-xl border min-h-[34px] px-3 py-1 text-xs font-semibold transition-colors cursor-pointer",
                       active
-                        ? "border-teal-600 bg-teal-50 text-teal-800 dark:bg-teal-950 dark:text-teal-300"
-                        : "border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                        ? "border-[#0f766e] bg-teal-50 text-[#0f766e] dark:border-teal-400 dark:bg-teal-950/60 dark:text-teal-300"
+                        : "border-[#d6cbb9] bg-white text-slate-700 hover:border-[#0f766e]/50 dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-300"
                     )}
                   >
                     {amenity}
@@ -336,31 +367,31 @@ export function Step4Accommodation({
           {/* Multi-Stay Split Allocation Bar */}
           {draft.lodgingSelectionMode === "selected" &&
             draft.selectedStays.length > 0 && (
-              <div className="rounded-2xl border border-teal-300 bg-teal-50/70 p-4 space-y-3 dark:border-teal-800 dark:bg-teal-950/30">
+              <div className="rounded-2xl border border-teal-300 bg-teal-50/75 p-4 space-y-3 dark:border-teal-800 dark:bg-teal-950/35">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="text-xs font-bold uppercase tracking-wider text-teal-900 dark:text-teal-200">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#0f766e] dark:text-teal-200">
                     Đang chọn {draft.selectedStays.length} nơi lưu trú (hỗ trợ chia đêm trên tổng {nights} đêm)
                   </div>
                   <Button size="sm" variant="outline" onClick={onKeepRange}>
-                    <Sparkles className="h-3.5 w-3.5" />
+                    <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                     Quay về chế độ Khoảng giá (Range)
                   </Button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                   {draft.selectedStays.map((stay) => {
                     const info = lodgings.find((l) => l.id === stay.lodgingId);
                     if (!info) return null;
                     return (
                       <div
                         key={stay.lodgingId}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-teal-200 bg-white px-3 py-2 dark:border-teal-900 dark:bg-slate-900"
+                        className="flex items-center justify-between gap-2 rounded-xl border border-teal-200/90 bg-white px-3.5 py-2.5 dark:border-teal-900 dark:bg-[#101929]"
                       >
                         <div className="min-w-0">
-                          <div className="font-bold text-xs truncate">
+                          <div className="font-bold text-xs text-slate-900 dark:text-white truncate">
                             {info.name}
                           </div>
-                          <div className="text-[11px] text-slate-500 price-num">
+                          <div className="text-[11px] text-slate-600 dark:text-slate-400 price-num">
                             ~{formatVND(Math.round(info.pricePerNight * avgMult))}
                             /đêm/phòng
                           </div>
@@ -370,13 +401,14 @@ export function Step4Accommodation({
                           <Button
                             size="icon"
                             variant="outline"
-                            className="h-7 w-7"
+                            className="h-9 w-9"
+                            aria-label={`Giảm số đêm tại ${info.name}`}
                             disabled={stay.nights <= 1}
                             onClick={() =>
                               onUpdateStayNights(stay.lodgingId, stay.nights - 1)
                             }
                           >
-                            <Minus className="h-3 w-3" />
+                            <Minus className="h-3.5 w-3.5" aria-hidden="true" />
                           </Button>
                           <span className="text-xs font-bold w-12 text-center price-num">
                             {stay.nights} đêm
@@ -384,13 +416,14 @@ export function Step4Accommodation({
                           <Button
                             size="icon"
                             variant="outline"
-                            className="h-7 w-7"
+                            className="h-9 w-9"
+                            aria-label={`Tăng số đêm tại ${info.name}`}
                             disabled={stay.nights >= nights}
                             onClick={() =>
                               onUpdateStayNights(stay.lodgingId, stay.nights + 1)
                             }
                           >
-                            <Plus className="h-3 w-3" />
+                            <Plus className="h-3.5 w-3.5" aria-hidden="true" />
                           </Button>
                         </div>
                       </div>
@@ -404,16 +437,19 @@ export function Step4Accommodation({
           {loading ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {[1, 2, 3, 4].map((i) => (
-                <Skeleton key={i} className="h-64 w-full" />
+                <Skeleton key={i} className="h-64 w-full rounded-2xl" />
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center dark:border-slate-700">
-              <BedDouble className="mx-auto h-8 w-8 text-slate-400 mb-2" />
-              <h4 className="font-bold text-base">
+            <div className="rounded-2xl border border-dashed border-[#d6cbb9] bg-[#faf7f2]/50 p-8 text-center dark:border-[#1e2d45] dark:bg-[#172338]/40">
+              <BedDouble
+                className="mx-auto h-8 w-8 text-slate-400 mb-2"
+                aria-hidden="true"
+              />
+              <h4 className="font-heading font-bold text-base text-slate-900 dark:text-white">
                 Không có chỗ ở nào khớp tất cả tiêu chí lọc
               </h4>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
                 Hãy thử nới rộng mức trần giá hoặc bỏ bớt tiện nghi bắt buộc.
               </p>
               <Button variant="outline" className="mt-4" onClick={onResetFilters}>
@@ -468,10 +504,10 @@ export function Step4Accommodation({
                   <div
                     key={item.id}
                     className={cn(
-                      "group rounded-2xl border overflow-hidden flex flex-col justify-between transition-all",
+                      "group rounded-2xl border overflow-hidden flex flex-col justify-between transition-colors",
                       isSelected
-                        ? "border-teal-600 ring-2 ring-teal-500/25 bg-white dark:border-teal-400 dark:bg-slate-900"
-                        : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900"
+                        ? "border-[#0f766e] ring-2 ring-teal-500/25 bg-white dark:border-teal-400 dark:bg-[#101929]"
+                        : "border-[#e7dfd3] bg-white hover:border-[#0f766e]/50 dark:border-[#1e2d45] dark:bg-[#101929]"
                     )}
                   >
                     <div>
@@ -491,19 +527,22 @@ export function Step4Accommodation({
                           >
                             {item.platform}
                           </span>
-                          <span className="rounded-full bg-black/35 backdrop-blur-xs px-2.5 py-0.5 text-xs font-semibold">
+                          <span className="rounded-full bg-black/45 backdrop-blur-xs px-2.5 py-0.5 text-xs font-semibold">
                             {TYPE_LABELS[item.type]}
                           </span>
                         </div>
 
                         <div className="flex items-end justify-between gap-2">
-                          <span className="text-xs font-medium text-white/90 drop-shadow-xs">
+                          <span className="text-xs font-semibold text-white/95 drop-shadow-xs">
                             {item.imageLabel}
                           </span>
                           <span className="inline-flex items-center gap-1 rounded-lg bg-white/95 text-slate-900 px-2 py-0.5 text-xs font-bold shadow-xs price-num">
-                            <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
+                            <Star
+                              className="h-3.5 w-3.5 fill-amber-400 text-amber-500"
+                              aria-hidden="true"
+                            />
                             {item.rating.toFixed(1)}{" "}
-                            <span className="font-normal text-slate-500">
+                            <span className="font-normal text-slate-600">
                               ({item.reviewCount})
                             </span>
                           </span>
@@ -513,10 +552,10 @@ export function Step4Accommodation({
                       {/* Body */}
                       <div className="p-4 space-y-2.5">
                         <div>
-                          <h4 className="font-bold text-base text-slate-900 dark:text-slate-100">
+                          <h4 className="font-heading font-bold text-base text-slate-900 dark:text-slate-100">
                             {item.name}
                           </h4>
-                          <p className="text-xs text-slate-500 mt-0.5">
+                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                             Khu vực: {item.area}
                           </p>
                         </div>
@@ -524,7 +563,11 @@ export function Step4Accommodation({
                         <div className="flex flex-wrap gap-1.5">
                           {item.freeCancellation && (
                             <Badge variant="emerald" className="text-[11px]">
-                              <ShieldCheck className="h-3 w-3" /> Miễn phí hủy
+                              <ShieldCheck
+                                className="h-3 w-3"
+                                aria-hidden="true"
+                              />{" "}
+                              Miễn phí hủy
                             </Badge>
                           )}
                           {item.amenities.slice(0, 3).map((am) => (
@@ -541,23 +584,23 @@ export function Step4Accommodation({
                     </div>
 
                     {/* Footer Pricing & Actions */}
-                    <div className="p-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-end justify-between gap-3">
+                    <div className="p-4 pt-3 border-t border-[#e7dfd3] dark:border-[#1e2d45] flex flex-wrap items-end justify-between gap-3">
                       <div>
-                        <div className="text-xs text-slate-500 price-num">
+                        <div className="text-xs text-slate-600 dark:text-slate-400 price-num">
                           {effNightlyMin === effNightlyMax
                             ? `${formatVND(effNightlyMin)} / đêm / phòng`
                             : `${formatCompactVND(
                                 effNightlyMin
                               )}–${formatCompactVND(effNightlyMax)} / đêm`}
                         </div>
-                        <div className="text-base font-extrabold text-teal-700 dark:text-teal-400 price-num">
+                        <div className="text-base font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                           {totalStayMin === totalStayMax
                             ? formatVND(totalStayMin)
                             : `${formatCompactVND(
                                 totalStayMin
                               )} – ${formatCompactVND(totalStayMax)}`}
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400">
                           Tổng {nights} đêm × {draft.rooms} phòng
                         </div>
                       </div>
@@ -570,11 +613,15 @@ export function Step4Accommodation({
                             rel="noopener noreferrer"
                           >
                             Xem trên nền tảng
-                            <ExternalLink className="h-3 w-3" />
+                            <ExternalLink
+                              className="h-3 w-3"
+                              aria-hidden="true"
+                            />
                           </a>
                         </Button>
                         <Button
                           size="sm"
+                          aria-pressed={isSelected}
                           variant={isSelected ? "default" : "outline"}
                           onClick={() =>
                             onToggleStay(
@@ -585,7 +632,11 @@ export function Step4Accommodation({
                         >
                           {isSelected ? (
                             <>
-                              <Check className="h-3.5 w-3.5" /> Đã chọn
+                              <Check
+                                className="h-3.5 w-3.5"
+                                aria-hidden="true"
+                              />{" "}
+                              Đã chọn
                             </>
                           ) : (
                             "Chọn"

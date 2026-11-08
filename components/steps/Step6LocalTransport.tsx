@@ -132,8 +132,10 @@ export function Step6LocalTransport({
             </div>
 
             <div className="text-right">
-              <div className="text-xs text-slate-500">Chi phí di chuyển tại chỗ</div>
-              <div className="text-base font-extrabold text-teal-700 dark:text-teal-400 price-num">
+              <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Chi phí di chuyển tại chỗ
+              </div>
+              <div className="text-base font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                 {formatVND(effectiveStepRange.min)} –{" "}
                 {formatVND(effectiveStepRange.max)}
               </div>
@@ -143,61 +145,78 @@ export function Step6LocalTransport({
 
         <CardContent className="space-y-5">
           {/* Cost Comparison Banner */}
-          <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/40">
+          <div className="rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-4 dark:border-[#1e2d45] dark:bg-[#172338]/70">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-3">
-              <Scale className="h-4 w-4 text-teal-600" />
-              <span>So sánh nhanh 2 phương thức ({days} ngày • {travelers} khách)</span>
+              <Scale
+                className="h-4 w-4 text-[#0f766e] dark:text-teal-400"
+                aria-hidden="true"
+              />
+              <span>
+                So sánh nhanh 2 phương thức ({days} ngày • {travelers} khách)
+              </span>
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <button
                 type="button"
+                aria-pressed={draft.localTransportMode === "ride_hailing"}
                 onClick={() => onSetMode("ride_hailing")}
                 className={cn(
-                  "rounded-xl border p-3.5 text-left transition-all cursor-pointer",
+                  "rounded-2xl border p-4 text-left transition-colors cursor-pointer",
                   draft.localTransportMode === "ride_hailing"
-                    ? "border-teal-600 bg-white ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-slate-900"
-                    : "border-slate-200 bg-white/70 hover:bg-white dark:border-slate-800 dark:bg-slate-900/50"
+                    ? "border-[#0f766e] bg-white ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-[#101929]"
+                    : "border-[#e7dfd3] bg-white/80 hover:border-[#0f766e]/50 hover:bg-white dark:border-[#1e2d45] dark:bg-[#101929]/60"
                 )}
               >
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 font-bold text-sm">
-                    <Car className="h-4 w-4 text-teal-600" /> Taxi / Xe công nghệ
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 font-heading font-bold text-sm text-slate-900 dark:text-white">
+                    <Car
+                      className="h-4 w-4 text-[#0f766e] dark:text-teal-400"
+                      aria-hidden="true"
+                    />{" "}
+                    Taxi / Xe công nghệ
                   </span>
                   <Badge variant="secondary">
                     {draft.ridesPerDay} cuốc/ngày
                   </Badge>
                 </div>
-                <div className="mt-2 text-sm font-bold price-num">
+                <div className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white price-num">
                   {formatCompactVND(rideComparison.min)} –{" "}
                   {formatCompactVND(rideComparison.max)}
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                   Êm ái, che nắng mưa, phù hợp gia đình có trẻ nhỏ hoặc nhóm bạn.
                 </p>
               </button>
 
               <button
                 type="button"
+                aria-pressed={draft.localTransportMode === "motorbike"}
                 onClick={() => onSetMode("motorbike")}
                 className={cn(
-                  "rounded-xl border p-3.5 text-left transition-all cursor-pointer",
+                  "rounded-2xl border p-4 text-left transition-colors cursor-pointer",
                   draft.localTransportMode === "motorbike"
-                    ? "border-teal-600 bg-white ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-slate-900"
-                    : "border-slate-200 bg-white/70 hover:bg-white dark:border-slate-800 dark:bg-slate-900/50"
+                    ? "border-[#0f766e] bg-white ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-[#101929]"
+                    : "border-[#e7dfd3] bg-white/80 hover:border-[#0f766e]/50 hover:bg-white dark:border-[#1e2d45] dark:bg-[#101929]/60"
                 )}
               >
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 font-bold text-sm">
-                    <Bike className="h-4 w-4 text-amber-600" /> Thuê xe máy + xăng
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 font-heading font-bold text-sm text-slate-900 dark:text-white">
+                    <Bike
+                      className="h-4 w-4 text-[#c2410c] dark:text-orange-400"
+                      aria-hidden="true"
+                    />{" "}
+                    Thuê xe máy + xăng
                   </span>
-                  <Badge variant="amber">{activeBikes} xe × {days} ngày</Badge>
+                  <Badge variant="amber">
+                    {activeBikes} xe × {days} ngày
+                  </Badge>
                 </div>
-                <div className="mt-2 text-sm font-bold price-num">
+                <div className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white price-num">
                   {formatCompactVND(bikeComparison.min)} –{" "}
                   {formatCompactVND(bikeComparison.max)}
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                   Chủ động lịch trình 24/24, tiết kiệm chi phí khi đi nhiều điểm.
                 </p>
               </button>
@@ -210,23 +229,23 @@ export function Step6LocalTransport({
           >
             <TabsList className="w-full sm:w-auto grid grid-cols-2">
               <TabsTrigger value="ride_hailing">
-                <Car className="h-4 w-4" />
+                <Car className="h-4 w-4" aria-hidden="true" />
                 Grab / Be / Xanh SM
               </TabsTrigger>
               <TabsTrigger value="motorbike">
-                <Bike className="h-4 w-4" />
+                <Bike className="h-4 w-4" aria-hidden="true" />
                 Thuê xe máy ({rentals.length} tiệm)
               </TabsTrigger>
             </TabsList>
 
             {/* Mode A: Ride Hailing */}
             <TabsContent value="ride_hailing" className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-4 dark:border-[#1e2d45] dark:bg-[#172338]/70">
                 <div>
-                  <div className="font-bold text-sm">
+                  <div className="font-heading font-bold text-sm text-slate-900 dark:text-white">
                     Số chuyến gọi xe dự kiến mỗi ngày
                   </div>
-                  <div className="text-xs text-slate-500">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                     Tổng {draft.ridesPerDay * days} chuyến trong {days} ngày
                     {travelers > 4 &&
                       ` (Nhóm ${travelers} người tự động tính theo xe 7 chỗ / nhiều xe)`}
@@ -238,21 +257,26 @@ export function Step6LocalTransport({
                   <Button
                     size="icon"
                     variant="outline"
+                    aria-label="Giảm số chuyến gọi xe mỗi ngày"
                     disabled={draft.ridesPerDay <= 1}
                     onClick={() => onSetRidesPerDay(draft.ridesPerDay - 1)}
                   >
-                    <Minus className="h-4 w-4" />
+                    <Minus className="h-4 w-4" aria-hidden="true" />
                   </Button>
-                  <span className="w-28 text-center font-bold text-sm price-num">
+                  <span
+                    aria-live="polite"
+                    className="w-28 text-center font-bold text-sm text-slate-900 dark:text-white price-num"
+                  >
                     {draft.ridesPerDay} chuyến / ngày
                   </span>
                   <Button
                     size="icon"
                     variant="outline"
+                    aria-label="Tăng số chuyến gọi xe mỗi ngày"
                     disabled={draft.ridesPerDay >= 12}
                     onClick={() => onSetRidesPerDay(draft.ridesPerDay + 1)}
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               </div>
@@ -260,7 +284,7 @@ export function Step6LocalTransport({
               {loading ? (
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-28 w-full" />
+                    <Skeleton key={i} className="h-28 w-full rounded-2xl" />
                   ))}
                 </div>
               ) : (
@@ -268,7 +292,7 @@ export function Step6LocalTransport({
                   {rides.map((r) => (
                     <div
                       key={r.id}
-                      className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                      className="rounded-2xl border border-[#e7dfd3] bg-white p-4 dark:border-[#1e2d45] dark:bg-[#101929]"
                     >
                       <div className="flex items-center justify-between">
                         <Badge
@@ -282,19 +306,19 @@ export function Step6LocalTransport({
                         >
                           {r.brand}
                         </Badge>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-slate-500 dark:text-slate-400">
                           Đón sau ~{r.waitTimeMinutes} phút
                         </span>
                       </div>
 
-                      <div className="font-bold text-sm mt-2.5">
+                      <div className="font-heading font-bold text-sm text-slate-900 dark:text-white mt-2.5">
                         {r.vehicleType}
                       </div>
-                      <div className="text-xs text-slate-500">
+                      <div className="text-xs text-slate-600 dark:text-slate-400">
                         Quãng đường TB nội đô: ~{r.avgDistanceKm} km/cuốc
                       </div>
 
-                      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-sm font-extrabold text-teal-700 dark:text-teal-400 price-num">
+                      <div className="mt-3 pt-2.5 border-t border-[#e7dfd3] dark:border-[#1e2d45] text-sm font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                         {formatVND(r.costPerTrip.min)} –{" "}
                         {formatVND(r.costPerTrip.max)} / chuyến
                       </div>
@@ -314,18 +338,19 @@ export function Step6LocalTransport({
                     <button
                       key={type}
                       type="button"
+                      aria-pressed={active}
                       onClick={() => onSetBikeType(type)}
                       className={cn(
-                        "rounded-xl border p-3.5 text-left transition-all cursor-pointer",
+                        "rounded-2xl border p-4 text-left transition-colors cursor-pointer",
                         active
-                          ? "border-teal-600 bg-teal-50/50 ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-teal-950/30"
-                          : "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+                          ? "border-[#0f766e] bg-teal-50/55 ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-teal-950/30"
+                          : "border-[#e7dfd3] bg-white hover:border-[#0f766e]/50 dark:border-[#1e2d45] dark:bg-[#101929]"
                       )}
                     >
-                      <div className="font-bold text-sm">
+                      <div className="font-heading font-bold text-sm text-slate-900 dark:text-white">
                         {BIKE_TYPE_LABELS[type].label}
                       </div>
-                      <p className="text-xs text-slate-500 mt-1">
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                         {BIKE_TYPE_LABELS[type].desc}
                       </p>
                     </button>
@@ -333,16 +358,21 @@ export function Step6LocalTransport({
                 })}
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/40">
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-4 dark:border-[#1e2d45] dark:bg-[#172338]/70">
                 <div className="space-y-0.5">
-                  <div className="font-bold text-sm">
+                  <div className="font-heading font-bold text-sm text-slate-900 dark:text-white">
                     Số lượng xe thuê & ước tính nhiên liệu
                   </div>
-                  <div className="text-xs text-slate-500 flex items-center gap-1.5">
-                    <Fuel className="h-3.5 w-3.5 text-amber-600" />
-                    Đã cộng xăng dự kiến {formatVND(FUEL_PER_BIKE_PER_DAY.min)}–
-                    {formatVND(FUEL_PER_BIKE_PER_DAY.max)}/xe/ngày (mặc định{" "}
-                    <code>ceil({travelers}/2) = {defaultBikes} xe</code>).
+                  <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                    <Fuel
+                      className="h-3.5 w-3.5 text-[#c2410c] dark:text-orange-400 shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span>
+                      Đã cộng xăng dự kiến {formatVND(FUEL_PER_BIKE_PER_DAY.min)}–
+                      {formatVND(FUEL_PER_BIKE_PER_DAY.max)}/xe/ngày (mặc định{" "}
+                      <code>ceil({travelers}/2) = {defaultBikes} xe</code>).
+                    </span>
                   </div>
                 </div>
 
@@ -350,21 +380,26 @@ export function Step6LocalTransport({
                   <Button
                     size="icon"
                     variant="outline"
+                    aria-label="Giảm số lượng xe thuê"
                     disabled={activeBikes <= 1}
                     onClick={() => onSetBikeCount(activeBikes - 1)}
                   >
-                    <Minus className="h-4 w-4" />
+                    <Minus className="h-4 w-4" aria-hidden="true" />
                   </Button>
-                  <span className="w-20 text-center font-bold text-sm price-num">
+                  <span
+                    aria-live="polite"
+                    className="w-20 text-center font-bold text-sm text-slate-900 dark:text-white price-num"
+                  >
                     {activeBikes} chiếc
                   </span>
                   <Button
                     size="icon"
                     variant="outline"
+                    aria-label="Tăng số lượng xe thuê"
                     disabled={activeBikes >= 20}
                     onClick={() => onSetBikeCount(activeBikes + 1)}
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4" aria-hidden="true" />
                   </Button>
                   {draft.bikeCount !== null && (
                     <Button
@@ -382,7 +417,7 @@ export function Step6LocalTransport({
               {loading ? (
                 <div className="space-y-3">
                   {[1, 2].map((i) => (
-                    <Skeleton key={i} className="h-36 w-full" />
+                    <Skeleton key={i} className="h-36 w-full rounded-2xl" />
                   ))}
                 </div>
               ) : (
@@ -395,53 +430,65 @@ export function Step6LocalTransport({
                         <div
                           key={shop.id}
                           className={cn(
-                            "rounded-2xl border p-4 flex flex-col justify-between gap-3 transition-all",
+                            "rounded-2xl border p-4 flex flex-col justify-between gap-3 transition-colors",
                             isSelected
-                              ? "border-teal-600 bg-teal-50/40 ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-teal-950/30"
-                              : "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+                              ? "border-[#0f766e] bg-teal-50/50 ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-teal-950/30"
+                              : "border-[#e7dfd3] bg-white hover:border-[#0f766e]/50 dark:border-[#1e2d45] dark:bg-[#101929]"
                           )}
                         >
                           <div className="space-y-2">
                             <div className="flex items-start justify-between gap-2">
                               <div>
-                                <h4 className="font-bold text-base">
+                                <h4 className="font-heading font-bold text-base text-slate-900 dark:text-white">
                                   {shop.name}
                                 </h4>
-                                <p className="text-xs text-slate-500">
+                                <p className="text-xs text-slate-600 dark:text-slate-400">
                                   {shop.address}
                                 </p>
                               </div>
                               <Badge variant="amber" className="shrink-0 price-num">
-                                <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+                                <Star
+                                  className="h-3 w-3 fill-amber-500 text-amber-500"
+                                  aria-hidden="true"
+                                />
                                 {shop.rating.toFixed(1)} ({shop.reviewCount})
                               </Badge>
                             </div>
 
                             {/* Price matrix */}
-                            <div className="grid grid-cols-3 gap-1.5 rounded-xl bg-slate-50 p-2.5 text-xs dark:bg-slate-800/70">
+                            <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-[#e7dfd3] bg-[#faf7f2] p-2.5 text-xs dark:border-[#1e2d45] dark:bg-[#172338]">
                               <div>
-                                <div className="text-slate-400 text-[11px]">Xe số</div>
-                                <div className="font-bold price-num">
+                                <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+                                  Xe số
+                                </div>
+                                <div className="font-bold text-slate-900 dark:text-white price-num">
                                   {formatCompactVND(shop.pricesPerDay.semi_auto)}
                                 </div>
                               </div>
                               <div>
-                                <div className="text-slate-400 text-[11px]">Tay ga</div>
-                                <div className="font-bold price-num">
+                                <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+                                  Tay ga
+                                </div>
+                                <div className="font-bold text-slate-900 dark:text-white price-num">
                                   {formatCompactVND(shop.pricesPerDay.scooter)}
                                 </div>
                               </div>
                               <div>
-                                <div className="text-slate-400 text-[11px]">Xe côn</div>
-                                <div className="font-bold price-num">
+                                <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+                                  Xe côn
+                                </div>
+                                <div className="font-bold text-slate-900 dark:text-white price-num">
                                   {formatCompactVND(shop.pricesPerDay.manual)}
                                 </div>
                               </div>
                             </div>
 
-                            <div className="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300">
+                            <div className="flex flex-wrap gap-2 text-xs text-slate-700 dark:text-slate-300">
                               <span className="inline-flex items-center gap-1">
-                                <Shield className="h-3.5 w-3.5 text-teal-600" />
+                                <Shield
+                                  className="h-3.5 w-3.5 text-[#0f766e] dark:text-teal-400"
+                                  aria-hidden="true"
+                                />
                                 {shop.depositRequirement}
                               </span>
                             </div>
@@ -449,7 +496,11 @@ export function Step6LocalTransport({
                             <div className="flex flex-wrap items-center gap-2">
                               {shop.hotelDelivery ? (
                                 <Badge variant="emerald">
-                                  <Truck className="h-3 w-3" /> Giao xe tận khách sạn
+                                  <Truck
+                                    className="h-3 w-3"
+                                    aria-hidden="true"
+                                  />{" "}
+                                  Giao xe tận khách sạn
                                 </Badge>
                               ) : (
                                 <Badge variant="secondary">
@@ -458,22 +509,29 @@ export function Step6LocalTransport({
                               )}
                               <a
                                 href={`tel:${shop.phone.replace(/\s+/g, "")}`}
-                                className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 hover:underline dark:text-teal-400 price-num"
+                                className="inline-flex items-center gap-1 text-xs font-bold text-[#0f766e] hover:underline dark:text-teal-400 price-num"
                               >
-                                <Phone className="h-3 w-3" /> {shop.phone}
+                                <Phone
+                                  className="h-3 w-3"
+                                  aria-hidden="true"
+                                />{" "}
+                                {shop.phone}
                               </a>
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
+                          <div className="flex items-center justify-between pt-3 border-t border-[#e7dfd3] dark:border-[#1e2d45]">
                             <div className="text-xs price-num">
-                              <span className="text-slate-400">Loại đang chọn: </span>
-                              <strong className="text-teal-700 dark:text-teal-400">
+                              <span className="text-slate-500 dark:text-slate-400">
+                                Loại đang chọn:{" "}
+                              </span>
+                              <strong className="text-[#0f766e] dark:text-teal-300">
                                 {formatVND(chosenRate)}/ngày
                               </strong>
                             </div>
                             <Button
                               size="sm"
+                              aria-pressed={isSelected}
                               variant={isSelected ? "default" : "outline"}
                               onClick={() =>
                                 onSelectRental(isSelected ? null : shop.id)
@@ -481,7 +539,11 @@ export function Step6LocalTransport({
                             >
                               {isSelected ? (
                                 <>
-                                  <Check className="h-3.5 w-3.5" /> Đã chọn tiệm
+                                  <Check
+                                    className="h-3.5 w-3.5"
+                                    aria-hidden="true"
+                                  />{" "}
+                                  Đã chọn tiệm
                                 </>
                               ) : (
                                 "Chọn cửa hàng"

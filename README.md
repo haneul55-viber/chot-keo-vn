@@ -29,14 +29,16 @@
 │   │   ├── rentals/route.ts    # API cửa hàng thuê xe máy
 │   │   ├── rides/route.ts      # API ước tính cước Grab / Be / Xanh SM
 │   │   └── holidays/route.ts   # API tra cứu lễ Tết & phân tích hệ số giá
-│   ├── globals.css             # Tailwind CSS v4 + biến giao diện Sáng/Tối + Print PDF
-│   ├── layout.tsx              # Root layout (vi-VN, font Be Vietnam Pro)
+│   ├── globals.css             # Tailwind CSS v4 + hệ màu Sunlit Linen / Midnight Bay + Print PDF
+│   ├── layout.tsx              # Root layout (vi-VN, Plus Jakarta Sans + Be Vietnam Pro + JetBrains Mono)
 │   └── page.tsx                # Trang chính khởi chạy Wizard
+├── .agents/skills/             # Antigravity workspace skills (bao gồm ui-ux-pro-max)
+├── design-system/chotkeo-vn/   # MASTER.md — Hệ thống thiết kế chuẩn hóa từ ui-ux-pro-max
 ├── components/
-│   ├── layout/                 # Header, WizardStepper, StickySummaryBar
+│   ├── layout/                 # Header, DestinationHero, WizardStepper, LiveBudgetSidebar, StickySummaryBar
 │   ├── steps/                  # Step1Basics -> Step7Summary
 │   ├── shared/                 # InteractiveMap
-│   └── ui/                     # Các thành phần giao diện shadcn/ui
+│   └── ui/                     # Các thành phần giao diện shadcn/ui (Bento 3xl + 44px touch targets)
 ├── data/
 │   ├── holidays.json           # Cấu hình ngày lễ, nghỉ hè, cao điểm 2026–2027
 │   ├── meal-costs.json         # Bảng đơn giá bữa ăn & hệ số điều chỉnh theo đô thị

@@ -40,9 +40,9 @@ const mealConfig = mealCostJson as MealCostConfig;
 const BUDGET_LEVELS: MealBudgetLevel[] = ["binh_dan", "trung_binh", "cao_cap"];
 
 const LEVEL_BADGE_LABELS: Record<MealBudgetLevel, string> = {
-  binh_dan: "Bình dân ($)",
-  trung_binh: "Trung bình ($$)",
-  cao_cap: "Cao cấp ($$$)",
+  binh_dan: "Bình dân • Tiết kiệm",
+  trung_binh: "Trung bình • Phổ biến",
+  cao_cap: "Cao cấp • Trải nghiệm",
 };
 
 const SESSION_OPTIONS: Array<{ value: MealSession | "all"; label: string }> = [
@@ -108,8 +108,10 @@ export function Step5Food({
             </div>
 
             <div className="text-right">
-              <div className="text-xs text-slate-500">Tổng ăn uống dự kiến</div>
-              <div className="text-base font-extrabold text-teal-700 dark:text-teal-400 price-num">
+              <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Tổng ăn uống dự kiến
+              </div>
+              <div className="text-base font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                 {formatVND(effectiveStepRange.min)} –{" "}
                 {formatVND(effectiveStepRange.max)}
               </div>
@@ -119,12 +121,12 @@ export function Step5Food({
 
         <CardContent className="space-y-5">
           {/* Meals per day adjuster */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/40">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-4 dark:border-[#1e2d45] dark:bg-[#172338]/70">
             <div>
-              <div className="font-bold text-sm">
+              <div className="font-heading font-bold text-sm text-slate-900 dark:text-white">
                 Số bữa ăn tính phí mỗi ngày
               </div>
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                 Nếu khách sạn đã có buffet sáng, bạn có thể giảm xuống 2 bữa/ngày.
               </div>
             </div>
@@ -137,9 +139,12 @@ export function Step5Food({
                 onClick={() => onSetMealsPerDay(draft.mealsPerDay - 1)}
                 aria-label="Giảm số bữa mỗi ngày"
               >
-                <Minus className="h-4 w-4" />
+                <Minus className="h-4 w-4" aria-hidden="true" />
               </Button>
-              <span className="w-24 text-center font-bold text-sm price-num">
+              <span
+                aria-live="polite"
+                className="w-24 text-center font-bold text-sm text-slate-900 dark:text-white price-num"
+              >
                 {draft.mealsPerDay} bữa / ngày
               </span>
               <Button
@@ -149,7 +154,7 @@ export function Step5Food({
                 onClick={() => onSetMealsPerDay(draft.mealsPerDay + 1)}
                 aria-label="Tăng số bữa mỗi ngày"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>
           </div>
@@ -165,29 +170,32 @@ export function Step5Food({
                 <button
                   key={level}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => onSetBudgetLevel(level)}
                   className={cn(
-                    "rounded-2xl border p-4 text-left transition-all cursor-pointer flex flex-col justify-between",
+                    "rounded-2xl border p-4 text-left transition-colors cursor-pointer flex flex-col justify-between",
                     isSelected
-                      ? "border-teal-600 bg-teal-50/50 ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-teal-950/30"
-                      : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900"
+                      ? "border-[#0f766e] bg-teal-50/55 ring-2 ring-teal-500/20 dark:border-teal-400 dark:bg-teal-950/30"
+                      : "border-[#e7dfd3] bg-white hover:border-[#0f766e]/50 dark:border-[#1e2d45] dark:bg-[#101929]"
                   )}
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-bold text-sm">{info.label}</span>
+                      <span className="font-heading font-bold text-sm text-slate-900 dark:text-white">
+                        {info.label}
+                      </span>
                       {isSelected && <Badge variant="default">Đang chọn</Badge>}
                     </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
                       {info.description}
                     </p>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-                    <div className="text-[11px] text-slate-400">
+                  <div className="mt-4 pt-3 border-t border-[#e7dfd3] dark:border-[#1e2d45]">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
                       Đơn giá tại {destination?.name}:
                     </div>
-                    <div className="text-sm font-extrabold text-teal-700 dark:text-teal-400 price-num">
+                    <div className="text-sm font-extrabold text-[#0f766e] dark:text-teal-300 price-num">
                       {formatVND(cityUnit.min)} – {formatVND(cityUnit.max)} / bữa
                     </div>
                   </div>
@@ -204,8 +212,12 @@ export function Step5Food({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Award className="h-5 w-5 text-amber-500" />
-                Quán ngon đề xuất gần {anchorLabel ? `"${anchorLabel}"` : `trung tâm ${destination?.name}`}
+                <Award
+                  className="h-5 w-5 text-[#c2410c] dark:text-orange-400"
+                  aria-hidden="true"
+                />
+                Quán ngon đề xuất gần{" "}
+                {anchorLabel ? `"${anchorLabel}"` : `trung tâm ${destination?.name}`}
               </CardTitle>
               <CardDescription>
                 Xếp hạng theo điểm trung bình trọng số Bayesian (kết hợp điểm sao Google Maps và độ tin cậy số lượt đánh giá).
@@ -216,33 +228,38 @@ export function Step5Food({
 
         <CardContent className="space-y-4">
           {/* Restaurant Filters */}
-          <div className="flex flex-wrap items-center gap-2.5 rounded-2xl border border-slate-200 bg-slate-50/70 p-3.5 dark:border-slate-800 dark:bg-slate-800/40">
+          <div className="flex flex-wrap items-center gap-2.5 rounded-2xl border border-[#e7dfd3] bg-[#faf7f2] p-3.5 dark:border-[#1e2d45] dark:bg-[#172338]/70">
             <div className="flex flex-wrap gap-1.5">
-              {SESSION_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() =>
-                    onChangeRestaurantFilters({ session: opt.value })
-                  }
-                  className={cn(
-                    "rounded-lg border px-2.5 py-1 text-xs font-semibold cursor-pointer",
-                    restaurantFilters.session === opt.value
-                      ? "border-teal-600 bg-teal-600 text-white dark:bg-teal-500 dark:text-slate-950"
-                      : "border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
-                  )}
-                >
-                  {opt.label}
-                </button>
-              ))}
+              {SESSION_OPTIONS.map((opt) => {
+                const active = restaurantFilters.session === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() =>
+                      onChangeRestaurantFilters({ session: opt.value })
+                    }
+                    className={cn(
+                      "rounded-xl border min-h-[36px] px-3 py-1 text-xs font-bold transition-colors cursor-pointer",
+                      active
+                        ? "border-[#0f766e] bg-[#0f766e] text-white dark:bg-teal-400 dark:text-slate-950"
+                        : "border-[#d6cbb9] bg-white text-slate-700 hover:border-[#0f766e]/50 dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-300"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
             </div>
 
             <select
+              aria-label="Lọc loại món ăn"
               value={restaurantFilters.cuisine}
               onChange={(e) =>
                 onChangeRestaurantFilters({ cuisine: e.target.value })
               }
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold outline-none dark:border-slate-700 dark:bg-slate-900"
+              className="min-h-[36px] rounded-xl border border-[#d6cbb9] bg-white px-3 py-1 text-xs font-semibold text-slate-800 outline-none focus:border-[#0f766e] dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-200 cursor-pointer"
             >
               {CUISINE_OPTIONS.map((c) => (
                 <option key={c} value={c}>
@@ -252,35 +269,41 @@ export function Step5Food({
             </select>
 
             <select
+              aria-label="Lọc phân khúc giá"
               value={restaurantFilters.priceLevel}
               onChange={(e) =>
                 onChangeRestaurantFilters({
                   priceLevel: e.target.value as MealBudgetLevel | "all",
                 })
               }
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold outline-none dark:border-slate-700 dark:bg-slate-900"
+              className="min-h-[36px] rounded-xl border border-[#d6cbb9] bg-white px-3 py-1 text-xs font-semibold text-slate-800 outline-none focus:border-[#0f766e] dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-200 cursor-pointer"
             >
               <option value="all">Mọi phân khúc giá</option>
-              <option value="binh_dan">Bình dân ($)</option>
-              <option value="trung_binh">Trung bình ($$)</option>
-              <option value="cao_cap">Cao cấp ($$$)</option>
+              <option value="binh_dan">Bình dân (Tiết kiệm)</option>
+              <option value="trung_binh">Trung bình (Phổ biến)</option>
+              <option value="cao_cap">Cao cấp (Trải nghiệm)</option>
             </select>
 
             <button
               type="button"
+              aria-pressed={restaurantFilters.minRating >= 4.6}
               onClick={() =>
                 onChangeRestaurantFilters({
                   minRating: restaurantFilters.minRating >= 4.6 ? 4.0 : 4.6,
                 })
               }
               className={cn(
-                "rounded-lg border px-2.5 py-1 text-xs font-semibold cursor-pointer ml-auto",
+                "inline-flex items-center gap-1 rounded-xl border min-h-[36px] px-3 py-1 text-xs font-bold transition-colors cursor-pointer sm:ml-auto price-num",
                 restaurantFilters.minRating >= 4.6
-                  ? "border-amber-500 bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-200"
-                  : "border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
+                  ? "border-amber-500 bg-amber-50 text-amber-900 dark:bg-amber-950/70 dark:text-amber-200"
+                  : "border-[#d6cbb9] bg-white text-slate-700 dark:border-[#1e2d45] dark:bg-[#101929] dark:text-slate-300"
               )}
             >
-              ★ Từ {restaurantFilters.minRating.toFixed(1)}+
+              <Star
+                className="h-3.5 w-3.5 fill-amber-400 text-amber-500"
+                aria-hidden="true"
+              />
+              <span>Từ {restaurantFilters.minRating.toFixed(1)}+</span>
             </button>
           </div>
 
@@ -288,13 +311,16 @@ export function Step5Food({
           {loadingPlaces ? (
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {[1, 2, 3, 4].map((i) => (
-                <Skeleton key={i} className="h-36 w-full" />
+                <Skeleton key={i} className="h-36 w-full rounded-2xl" />
               ))}
             </div>
           ) : places.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center dark:border-slate-700">
-              <UtensilsCrossed className="mx-auto h-8 w-8 text-slate-400 mb-2" />
-              <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
+            <div className="rounded-2xl border border-dashed border-[#d6cbb9] bg-[#faf7f2]/50 p-8 text-center dark:border-[#1e2d45] dark:bg-[#172338]/40">
+              <UtensilsCrossed
+                className="mx-auto h-8 w-8 text-slate-400 mb-2"
+                aria-hidden="true"
+              />
+              <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                 Chưa có quán nào khớp bộ lọc hiện tại.
               </p>
               <Button
@@ -318,21 +344,25 @@ export function Step5Food({
               {places.map((place, index) => (
                 <div
                   key={place.id}
-                  className="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col justify-between gap-3 hover:border-teal-300 transition-colors dark:border-slate-800 dark:bg-slate-900"
+                  className="rounded-2xl border border-[#e7dfd3] bg-white p-4 flex flex-col justify-between gap-3 hover:border-[#0f766e]/50 transition-colors dark:border-[#1e2d45] dark:bg-[#101929]"
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <span className="text-xs font-bold text-teal-600 dark:text-teal-400 mr-1.5">
+                        <span className="text-xs font-extrabold text-[#0f766e] dark:text-teal-400 mr-1.5 price-num">
                           #{index + 1}
                         </span>
-                        <span className="font-bold text-base text-slate-900 dark:text-slate-100">
+                        <span className="font-heading font-bold text-base text-slate-900 dark:text-slate-100">
                           {place.name}
                         </span>
                       </div>
                       <Badge variant="amber" className="shrink-0 price-num">
-                        <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-                        {place.rating.toFixed(1)} ({place.reviewCount.toLocaleString("vi-VN")})
+                        <Star
+                          className="h-3 w-3 fill-amber-500 text-amber-500"
+                          aria-hidden="true"
+                        />
+                        {place.rating.toFixed(1)} (
+                        {place.reviewCount.toLocaleString("vi-VN")})
                       </Badge>
                     </div>
 
@@ -340,7 +370,7 @@ export function Step5Food({
                       {place.specialty}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
                       <Badge variant="secondary" className="text-[11px]">
                         {LEVEL_BADGE_LABELS[place.priceLevel]}
                       </Badge>
@@ -348,16 +378,21 @@ export function Step5Food({
                         Điểm xếp hạng: {place.bayesianScore.toFixed(2)}
                       </Badge>
                       <span className="inline-flex items-center gap-1 price-num">
-                        <MapPin className="h-3 w-3 text-teal-600" />
+                        <MapPin
+                          className="h-3 w-3 text-[#0f766e] dark:text-teal-400"
+                          aria-hidden="true"
+                        />
                         Cách {place.distanceKm} km
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-[#e7dfd3] dark:border-[#1e2d45]">
                     <div className="text-xs price-num">
-                      <span className="text-slate-400">Ước tính: </span>
-                      <strong className="text-slate-800 dark:text-slate-200">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Ước tính:{" "}
+                      </span>
+                      <strong className="text-slate-900 dark:text-slate-100">
                         {formatCompactVND(place.estimatedPerPerson.min)} –{" "}
                         {formatCompactVND(place.estimatedPerPerson.max)}/người
                       </strong>
@@ -370,7 +405,7 @@ export function Step5Food({
                         rel="noopener noreferrer"
                       >
                         Mở Google Maps
-                        <ExternalLink className="h-3 w-3" />
+                        <ExternalLink className="h-3 w-3" aria-hidden="true" />
                       </a>
                     </Button>
                   </div>
