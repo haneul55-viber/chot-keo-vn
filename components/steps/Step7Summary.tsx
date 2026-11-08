@@ -31,6 +31,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import { VietQRCard } from "@/components/shared/VietQRCard";
+import { useAuth } from "@/lib/hooks/useAuth";
 import { getDestinationById } from "@/data/destinations";
 import {
   encodeTripShareParam,
@@ -74,6 +76,7 @@ export function Step7Summary({
 }: Step7SummaryProps) {
   const origin = getDestinationById(draft.originId);
   const destination = getDestinationById(draft.destinationId);
+  const { profile } = useAuth();
 
   const [tripName, setTripName] = useState(
     `Kèo đi ${destination?.name ?? "Du lịch"} (${formatDateVN(draft.startDate)})`
@@ -537,6 +540,40 @@ export function Step7Summary({
           </CardContent>
         </Card>
       </div>
+
+      {/* VietQR Group Cost Splitting Card */}
+      <VietQRCard
+        bankBin={profile?.bank_bin || "970422"}
+        bankName={profile?.bank_name || "MBBank"}
+        accountNo={profile?.bank_account_no || "0987654321"}
+        accountName={profile?.bank_account_name || "TRƯỞNG NHÓM CHOTKEO"}
+        amountPerPax={Math.round(totalMid / Math.max(1, pricing.totalTravelers))}
+        inviteCode={draft.destinationId.slice(0, 4) + "-" + draft.startDate.slice(5).replace("-", "")}
+        tripName={tripName || `Chuyến đi ${destination?.name}`}
+        members={[
+          {
+            id: "m-owner",
+            trip_id: "local",
+            user_id: null,
+            nickname: profile?.full_name || "Trưởng nhóm",
+            avatar_url: profile?.avatar_url || null,
+            role: "owner",
+            has_paid: true,
+            joined_at: new Date().toISOString(),
+          },
+          ...Array.from({ length: Math.max(0, pricing.totalTravelers - 1) }, (_, i) => ({
+            id: `m-${i + 2}`,
+            trip_id: "local",
+            user_id: null,
+            nickname: `Bạn ${i + 1}`,
+            avatar_url: null,
+            role: "member" as const,
+            has_paid: false,
+            joined_at: new Date().toISOString(),
+          })),
+        ]}
+        isOwner={true}
+      />
 
       {/* Data Sources, Timestamps & Disclaimer Card */}
       <Card className="print-card bg-[#faf7f2]/80 dark:bg-[#101929]/80">
