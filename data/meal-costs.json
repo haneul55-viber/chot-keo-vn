@@ -1,0 +1,46 @@
+{
+  "levels": {
+    "binh_dan": {
+      "label": "Bình dân / Ẩm thực đường phố",
+      "description": "Quán địa phương lâu đời, chợ đêm, phở/bún/cơm tấm đặc sản bản địa",
+      "perMealRange": {
+        "min": 45000,
+        "max": 85000
+      }
+    },
+    "trung_binh": {
+      "label": "Trung bình / Quán ngon nổi tiếng",
+      "description": "Nhà hàng gia đình, lẩu/nướng đặc sản, hải sản vừa phải kèm cà phê/tráng miệng",
+      "perMealRange": {
+        "min": 110000,
+        "max": 220000
+      }
+    },
+    "cao_cap": {
+      "label": "Cao cấp / Hải sản & Fine Dining",
+      "description": "Nhà hàng view đẹp, hải sản tươi sống chọn tại bể, buffet resort & rooftop bar",
+      "perMealRange": {
+        "min": 320000,
+        "max": 680000
+      }
+    }
+  },
+  "cityAdjustments": {
+    "da-lat": 1.0,
+    "da-nang": 0.98,
+    "nha-trang": 1.05,
+    "phu-quoc": 1.22,
+    "ha-noi": 1.05,
+    "tp-hcm": 1.08,
+    "sa-pa": 1.05,
+    "hoi-an": 1.02,
+    "hue": 0.88,
+    "quy-nhon": 0.92,
+    "vung-tau": 1.05,
+    "ha-long": 1.12,
+    "ninh-binh": 0.95,
+    "can-tho": 0.9,
+    "mui-ne": 1.04
+  },
+  "childMealFactor": 0.65
+}
